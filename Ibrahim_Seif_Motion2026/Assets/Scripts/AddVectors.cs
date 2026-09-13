@@ -52,5 +52,14 @@ public class AddVectors : MonoBehaviour
         //{
         //    Debug.DrawLine(Vector2.zero, rPlusB, Color.magenta);
         //}
+
+
+        //pythagorean theorem to get the magnitude of vector rPlusB
+        float sizeOfRPlusB = Mathf.Sqrt(rPLusB.x * rPLusB.x + rPLusB.y * rPLusB.y);
+        Debug.Log(sizeOfRPlusB);
+        Debug.DrawLine(Vector2.zero, rPLusB, Color.magenta);
+
+        //We can use vector subtraction to get a direction to a target (as in the vector from b position to r position)
+        Vector2 fromRToB = bTransform.position - rTransform.position;
     }
 }
