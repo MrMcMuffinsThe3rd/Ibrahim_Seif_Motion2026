@@ -36,17 +36,33 @@ public class Player : MonoBehaviour
         }
     }
 
-    void SpawnBombAtOffset(Vector3 inOffset)
+    GameObject SpawnBombAtOffset(Vector3 inOffset)
     {
-        Instantiate(bombPrefab, inOffset + transform.position, Quaternion.identity);
+      return  Instantiate(bombPrefab, inOffset + transform.position, Quaternion.identity);
     }
 
     void SpawnBombTrail(float bombSpacing, int numberOfBombs)
     {
         for (int i = 0; i < numberOfBombs; i++)
         {
-            SpawnBombAtOffset(bombOffset);
+            GameObject SpawnedBomb = SpawnBombAtOffset(bombOffset);
+
+            Vector2 whatever = SpawnedBomb.transform.position;
+            whatever.y += i * bombSpacing;
+            SpawnedBomb.transform.position = whatever;
+
+            //SpawnBombAtOffset(bombOffset).transform.position += bombSpacing;
+
+            //bombOffset.y += bombSpacing;
+
+            //Instantiate(bombPrefab, bombSpacing + bombPrefab.transform.position.y, Quaternion.identity);
+
         }
+    }
+
+    void SpawnBombOnRandomCorner(float inDistance)
+    {
+
     }
 
     public void WarpPlayer(Transform target, float ratio)
