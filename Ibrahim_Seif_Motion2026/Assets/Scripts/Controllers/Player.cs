@@ -9,10 +9,10 @@ public class Player : MonoBehaviour
     public Transform enemyTransform;
     public GameObject bombPrefab;
     public Transform bombsTransform;
-    public Vector3 bombOffset = new Vector3(0, 1);
+    public Vector3 bombOffset = new Vector3(0, -1);
 
     public float bombTrailSpacing;
-    public float numberOfTrailBombs;
+    public int numberOfTrailBombs;
     public float cornerBombDistance;
     public float warpRatio;
 
@@ -25,7 +25,12 @@ public class Player : MonoBehaviour
             //SpawnBombAtOffset();
         }
 
-        if(Keyboard.current.wKey.wasPressedThisFrame)
+        if (Keyboard.current.tKey.wasPressedThisFrame)
+        {
+            SpawnBombTrail(bombTrailSpacing, numberOfTrailBombs);
+        }
+
+        if (Keyboard.current.wKey.wasPressedThisFrame)
         {
             //WarpPlayer(enemyTransform, );
         }
@@ -33,7 +38,15 @@ public class Player : MonoBehaviour
 
     void SpawnBombAtOffset(Vector3 inOffset)
     {
-        Instantiate(bombPrefab, inOffset, Quaternion.identity);
+        Instantiate(bombPrefab, inOffset + transform.position, Quaternion.identity);
+    }
+
+    void SpawnBombTrail(float bombSpacing, int numberOfBombs)
+    {
+        for (int i = 0; i < numberOfBombs; i++)
+        {
+            SpawnBombAtOffset(bombOffset);
+        }
     }
 
     public void WarpPlayer(Transform target, float ratio)
