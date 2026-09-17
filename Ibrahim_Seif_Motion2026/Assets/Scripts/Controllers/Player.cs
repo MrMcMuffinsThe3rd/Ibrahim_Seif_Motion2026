@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,28 +13,47 @@ public class Player : MonoBehaviour
     public Vector3 bombOffset = new Vector3(0, 1);
 
     public float bombTrailSpacing;
-    public float numberOfTrailBombs;
-    public float cornerBombDistance;
-    public float warpRatio;
+    public int numberOfTrailBombs;
+    //public float cornerBombDistance;
+    //public float warpRatio;
 
     void Update()
     {
-        if(Keyboard.current.bKey.wasPressedThisFrame)
+        if(Keyboard.current.bKey.wasPressedThisFrame) // task 1 part a
         {
             SpawnBombAtOffset(bombOffset);
             //SpawnBombAtOffset(new Vector(0,1));
             //SpawnBombAtOffset();
         }
 
-        if(Keyboard.current.wKey.wasPressedThisFrame)
+        if (Keyboard.current.tKey.wasPressedThisFrame) // task 1 part b
+        {
+            //SpawnBombTrail(bombTrailSpacing, numberOfTrailBombs);
+
+        }
+
+        if (Keyboard.current.wKey.wasPressedThisFrame)
         {
             //WarpPlayer(enemyTransform, );
         }
     }
 
-    void SpawnBombAtOffset(Vector3 inOffset)
+    void SpawnBombAtOffset(Vector3 inOffset) //task 1 part a
     {
         Instantiate(bombPrefab, inOffset, Quaternion.identity);
+    }
+
+    void SpawnBombTrail(float bombSpacing, int bombsNumber) //task 1 part b
+    {
+
+        //using https://docs.unity3d.com/ScriptReference/Vector3.Distance.html
+
+       Vector3 bombSpacingVector = transform.position - bombsTransform.position;
+       bombSpacing = Mathf.Sqrt(bombSpacingVector.x * bombSpacingVector.x + bombSpacingVector.y * bombSpacingVector.y);
+
+        //Instantiate(bombPrefab, bombSpacing, Quaternion.identity);
+
+
     }
 
     public void WarpPlayer(Transform target, float ratio)
