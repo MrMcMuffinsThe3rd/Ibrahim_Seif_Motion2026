@@ -35,18 +35,18 @@ public class Player : MonoBehaviour
             SpawnBombOnRandomCorner(cornerBombDistance);
         }
 
-        if (Keyboard.current.wKey.wasPressedThisFrame)
+        if (Keyboard.current.wKey.wasPressedThisFrame) //task 3
         {
-            //WarpPlayer(enemyTransform, );
+            WarpPlayer(enemyTransform, warpRatio);
         }
     }
 
-    GameObject SpawnBombAtOffset(Vector3 inOffset)
+    GameObject SpawnBombAtOffset(Vector3 inOffset) //i got help in tutoring here
     {
       return  Instantiate(bombPrefab, inOffset + transform.position, Quaternion.identity);
     }
 
-    void SpawnBombTrail(float bombSpacing, int numberOfBombs)
+    void SpawnBombTrail(float bombSpacing, int numberOfBombs) //i got help in tutoring here
     {
         for (int i = 0; i < numberOfBombs; i++)
         {
@@ -110,28 +110,16 @@ public class Player : MonoBehaviour
         //getting direction to a target vector
         Vector2 fromTargetToPlayer = transform.position - target.position;
 
-        
+        //using this link: https://docs.unity3d.com/ScriptReference/Vector3.Lerp.html
 
-       //direction to a target 
-       //if the value of the ratio is 1
-       if(ratio == 1f)
-        {
-            //move player
-            transform.position = Vector2.up; //it'll move all the way
-        }
-       //if value of the ratio is 0.5 it'll move halfway
-       else if (ratio == 0.5f)
-        {
-            transform.position = Vector2.up / 2; //moves halfway
-        }
-       //if the value of the ratio is 0, it won't move
-       else if(ratio == 0f) 
-        {
-            transform.position = transform.position; //will not move
-        }
-       else if(ratio > 1f)
-        {
-            transform.position = transform.position; //will not move
-        }
+
+        //distance from player and target
+        float distance = Vector3.Distance(transform.position, target.position);
+
+        //ratio = distance / Mathf.Sqrt(fromTargetToPlayer.x * fromTargetToPlayer.x + fromTargetToPlayer.y * fromTargetToPlayer.y); //ratio is 1
+        Debug.Log(ratio);
+
+        transform.position = Vector3.Lerp(transform.position, target.position, ratio);
+    
     }
 }
