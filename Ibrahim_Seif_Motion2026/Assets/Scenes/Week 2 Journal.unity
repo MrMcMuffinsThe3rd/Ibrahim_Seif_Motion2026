@@ -150,14 +150,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   asteroidTransforms: []
-  enemyTransform: {fileID: 0}
+  enemyTransform: {fileID: 2109722952}
   bombPrefab: {fileID: 1273894435109820, guid: b262926197932c945b68169dd6fd6c5c, type: 3}
   bombsTransform: {fileID: 0}
   bombOffset: {x: 0, y: -1, z: 0}
   bombTrailSpacing: 0.5
   numberOfTrailBombs: 3
-  cornerBombDistance: 0
-  warpRatio: 0
+  cornerBombDistance: 1
+  warpRatio: 0.1
+  asteroidDetectionDistance: 5
 --- !u!212 &590477206
 SpriteRenderer:
   serializedVersion: 2

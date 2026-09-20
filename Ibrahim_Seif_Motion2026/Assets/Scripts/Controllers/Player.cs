@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     public int numberOfTrailBombs;
     public float cornerBombDistance;
     public float warpRatio;
+    public float asteroidDetectionDistance;
 
     void Update()
     {
@@ -38,6 +39,11 @@ public class Player : MonoBehaviour
         if (Keyboard.current.wKey.wasPressedThisFrame) //task 3
         {
             WarpPlayer(enemyTransform, warpRatio);
+        }
+
+        if (Keyboard.current.dKey.wasPressedThisFrame) //task 4
+        {
+            DetectAsteroids(asteroidDetectionDistance, asteroidTransforms);
         }
     }
 
@@ -121,5 +127,11 @@ public class Player : MonoBehaviour
 
         transform.position = Vector3.Lerp(transform.position, target.position, ratio);
     
+    }
+
+
+    public void DetectAsteroids(float inMaxRange, List<Transform> inAsteroids)
+    {
+
     }
 }
