@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
@@ -132,6 +133,32 @@ public class Player : MonoBehaviour
 
     public void DetectAsteroids(float inMaxRange, List<Transform> inAsteroids)
     {
+        //for each in range asteroid – a line should be drawn using Debug.DrawLine
+        for (int i = 0; i < inAsteroids.Count; i++)
+        {
+ 
+            //check if any of the transforms contained in “inAsteroids” are within “inMaxRange”
+            //we do that by getting the magnitude of the direction to a target vector
 
+            float DistancefromPlayerToAsteroid = Vector3.Distance(transform.position, inAsteroids[i].transform.position);
+
+            Debug.Log(DistancefromPlayerToAsteroid);
+
+            if (DistancefromPlayerToAsteroid < inMaxRange)
+            {
+                Debug.Log("Is this running?");
+
+                //using this link: https://gamedev.stackexchange.com/questions/89776/how-can-i-draw-a-line-of-certain-length-and-direction
+                //we will assign a length (2.5) to the vector
+                //We have to normalise the vector between the player position and the asteroid
+                //we can do that using the direction to a target method to get the vector 
+                Vector3 fromPlayerToAsteroid = inAsteroids[i].transform.position - transform.position;
+                fromPlayerToAsteroid.Normalize();
+                Vector3 lengthVector = transform.position + (fromPlayerToAsteroid * 2.5f);
+
+                Debug.DrawLine(transform.position, lengthVector, Color.green, 2f);
+            }
+
+        }
     }
 }
