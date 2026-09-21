@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour
 {
@@ -18,8 +20,31 @@ public class Player : MonoBehaviour
     public float warpRatio;
     public float asteroidDetectionDistance;
 
+    public Vector3 currentVelocity = Vector3.right;
+    public float maxSpeed;
+    public float accelerationTime;
+    public float deccelerationTime;
+    public float currentAcceleration;
+    float decceleration;
+
+    public Vector3 currentVelocityLeftRight = Vector3.right;
+    public Vector3 currentVelocityUpDown = Vector3.up;
+
+    void Start()
+    {
+        currentAcceleration = maxSpeed / accelerationTime;
+        decceleration = maxSpeed / decceleration;
+    }
+
     void Update()
     {
+
+        //transform.position += currentVelocity * Time.deltaTime;
+
+        //PlayerMovement();
+        PlayerMovementProfSolution();
+
+
         if(Keyboard.current.bKey.wasPressedThisFrame) //task 1 part a
         {
             SpawnBombAtOffset(bombOffset);
@@ -161,4 +186,117 @@ public class Player : MonoBehaviour
 
         }
     }
+
+    //Week 3 In-class excercise
+    void PlayerMovement()
+    {
+        if(Keyboard.current.leftArrowKey.isPressed)
+        {
+            transform.position -= currentVelocityLeftRight;
+        }
+        else if (Keyboard.current.rightArrowKey.isPressed)
+        {
+            transform.position += currentVelocityLeftRight;
+        }
+        else if(Keyboard.current.upArrowKey.isPressed)
+        {
+            transform.position += currentVelocityUpDown;
+        }
+        else if (Keyboard.current.downArrowKey.isPressed)
+        {
+            transform.position -= currentVelocityUpDown;
+        }
+    }
+
+
+    void PlayerMovementProfSolution()
+    {
+        //currentVelocity = Vector3.zero; //this is so that if the player is not pressing anything, the player won't move
+
+        Vector3 accelerationDirection = Vector3.zero;
+
+        if (Keyboard.current.leftArrowKey.isPressed)
+        {
+            accelerationDirection += Vector3.left; //we don't need to add Time.deltatime here because technically it is not changing over time
+                                                                                        //it's just moving the player
+            //if the correct time has passed, make the player reach the max speed
+            if (Time.deltaTime > accelerationTime)
+            {
+                Debug.Log("is this running");
+                currentAcceleration = maxSpeed;
+            }
+
+            //Prevent the player's velocity from exceeding a maxSpeed value
+            if(math.abs(currentVelocity.x) > maxSpeed)
+            {
+                currentAcceleration = maxSpeed;
+            }
+        }
+        if (Keyboard.current.rightArrowKey.isPressed)
+        {
+            accelerationDirection += Vector3.right;
+
+            //if the correct time has passed, make the player reach the max speed
+            if (Time.deltaTime > accelerationTime)
+            {
+                accelerationDirection.x = -maxSpeed;
+            }
+
+            //Prevent the player's velocity from exceeding a maxSpeed value
+            if (math.abs(currentVelocity.x) > maxSpeed)
+            {
+                accelerationDirection = Vector3.zero;
+            }
+        }
+        if (Keyboard.current.upArrowKey.isPressed)
+        {
+            accelerationDirection += Vector3.up;
+
+            if (Time.deltaTime > accelerationTime)
+            {
+                accelerationDirection.y = maxSpeed;
+            }
+
+            if (math.abs(currentVelocity.y) > maxSpeed)
+            {
+                accelerationDirection = Vector3.zero;
+            }
+        }
+        if (Keyboard.current.downArrowKey.isPressed)
+        {
+            accelerationDirection += Vector3.down;
+
+            if (Time.deltaTime > accelerationTime)
+            {
+                accelerationDirection.y = -maxSpeed;
+            }
+
+            if (math.abs(currentVelocity.y) > maxSpeed)
+            {
+                accelerationDirection = Vector3.zero;
+            }
+        }
+
+
+        //ACCELERATION DIRECTION REPRESENTS THE DIRECTION WE ARE ACCELERATING
+        //WE NORMALIZE IT 
+        //AND THEN SET THE AMOUNT TO ACCELERATE BY:
+        currentVelocity += accelerationDirection.normalized * currentAcceleration * Time.deltaTime; //we added Time.deltatime because there's change over time
+                                                                           //we're normalising here so if the player is pressing two buttoms at once, 
+                                                                                                            //they don't get an increased speed
+
+        //this is the solution for the previous apparently (not done, complete it in week 3 journal)
+        if(currentVelocity.magnitude > maxSpeed)
+        {
+            //normalise and multiply it by maxSpeed so that it is moving at maxSpeed (i have a 7 and i want to turn it to 3 so i divide the 7 by itself (normalisation) and then multiply by 3)
+            currentVelocity = currentVelocity.normalized * maxSpeed;
+        }
+
+        transform.position += currentVelocity * Time.deltaTime; //we dont need to normalise here because normalising will shrink down the velocity and give us the same
+                                                                //speed which we don't want
+
+      
+    }
+
+
 }
