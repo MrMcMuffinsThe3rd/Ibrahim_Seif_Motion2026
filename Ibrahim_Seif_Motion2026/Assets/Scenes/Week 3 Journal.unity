@@ -245,16 +245,18 @@ MonoBehaviour:
   bombPrefab: {fileID: 0}
   bombsTransform: {fileID: 0}
   bombOffset: {x: 0, y: -1, z: 0}
+  speed: 1
   bombTrailSpacing: 0
   numberOfTrailBombs: 0
   cornerBombDistance: 0
   warpRatio: 0
   asteroidDetectionDistance: 0
-  currentVelocity: {x: 1, y: 0, z: 0}
-  maxSpeed: 0
-  accelerationTime: 0
-  deccelerationTime: 0
-  currentAcceleration: 0
+  currentVelocity: {x: 0, y: 0, z: 0}
+  maxSpeed: 4
+  accelerationTime: 2
+  deccelerationTime: 2
+  currentAcceleration: 1
+  decceleration: 0
 --- !u!212 &91288427
 SpriteRenderer:
   serializedVersion: 2
