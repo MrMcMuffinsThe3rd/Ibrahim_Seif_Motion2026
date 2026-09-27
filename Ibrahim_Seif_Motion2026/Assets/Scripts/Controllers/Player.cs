@@ -4,6 +4,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using UnityEngine.Windows;
 using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour
@@ -13,6 +14,8 @@ public class Player : MonoBehaviour
     public GameObject bombPrefab;
     public Transform bombsTransform;
     public Vector3 bombOffset = new Vector3(0, -1);
+
+    public float speed;
 
     public float bombTrailSpacing;
     public int numberOfTrailBombs;
@@ -25,15 +28,15 @@ public class Player : MonoBehaviour
     public float accelerationTime;
     public float deccelerationTime;
     public float currentAcceleration;
-    float decceleration;
+    public float decceleration;
 
-    public Vector3 currentVelocityLeftRight = Vector3.right;
-    public Vector3 currentVelocityUpDown = Vector3.up;
+    //public Vector3 currentVelocityLeftRight = Vector3.right;
+    //public Vector3 currentVelocityUpDown = Vector3.up;
 
     void Start()
     {
         currentAcceleration = maxSpeed / accelerationTime;
-        decceleration = maxSpeed / decceleration;
+        decceleration = maxSpeed / deccelerationTime;
     }
 
     void Update()
@@ -41,8 +44,8 @@ public class Player : MonoBehaviour
 
         //transform.position += currentVelocity * Time.deltaTime;
 
-        //PlayerMovement();
-        PlayerMovementProfSolution();
+        PlayerMovement();
+        //PlayerMovementProfSolution();
 
 
         if(Keyboard.current.bKey.wasPressedThisFrame) //task 1 part a
@@ -188,24 +191,95 @@ public class Player : MonoBehaviour
     }
 
     //Week 3 In-class excercise
-    void PlayerMovement()
+    void PlayerMovement() //Week 3 journal task 1a/1b
     {
-        if(Keyboard.current.leftArrowKey.isPressed)
+        Vector3 accelerationDirection = Vector3.zero; //resets the direction (no input)
+
+            if (Keyboard.current.leftArrowKey.isPressed)
+            {
+                //Update the player’s input to use acceleration rather than velocity
+                accelerationDirection = Vector3.left; //just sets the direction of acceleration
+                currentVelocity += currentAcceleration * accelerationDirection * Time.deltaTime;
+
+                //acceleration causes the player to reach a maximum speed threshold within a specified timeframe (accelerationTime)
+                if (Time.deltaTime > accelerationTime)
+                {
+                    currentVelocity = accelerationDirection * maxSpeed;
+                }
+
+                //prevent the player's velocity from exceeding maxSpeed Value
+                if (math.abs(currentVelocity.x) > maxSpeed)
+                {
+                    currentVelocity.x = -maxSpeed;
+                }
+            }
+            else if (Keyboard.current.rightArrowKey.isPressed)
+            {
+                accelerationDirection = Vector3.right;
+                currentVelocity += currentAcceleration * accelerationDirection * Time.deltaTime;
+
+                if (Time.deltaTime > accelerationTime)
+                {
+                    currentVelocity = accelerationDirection * maxSpeed;
+                }
+
+                if (math.abs(currentVelocity.x) > maxSpeed)
+                {
+                    currentVelocity.x = maxSpeed;
+                }
+            }
+            else if (Keyboard.current.upArrowKey.isPressed)
+            {
+                accelerationDirection = Vector3.up;
+                currentVelocity += currentAcceleration * accelerationDirection * Time.deltaTime;
+
+                if (Time.deltaTime > accelerationTime)
+                {
+                    currentVelocity = accelerationDirection * maxSpeed;
+                }
+
+                if (math.abs(currentVelocity.y) > maxSpeed)
+                {
+                    currentVelocity.y = maxSpeed;
+                }
+            }
+            else if (Keyboard.current.downArrowKey.isPressed)
+            {
+                accelerationDirection = Vector3.down;
+                currentVelocity += currentAcceleration * accelerationDirection * Time.deltaTime;
+
+                if (Time.deltaTime > accelerationTime)
+                {
+                    currentVelocity = accelerationDirection * maxSpeed;
+                }
+
+                if (math.abs(currentVelocity.y) > maxSpeed)
+                {
+                    currentVelocity.y = -maxSpeed;
+                }
+            }
+
+
+            if (Time.deltaTime > deccelerationTime) //task 1c
         {
-            transform.position -= currentVelocityLeftRight;
+            //character comes to a rest after decceleration time
+            currentVelocity.x = 0;
+            currentVelocity.y = 0;
         }
-        else if (Keyboard.current.rightArrowKey.isPressed)
+ 
+            if(Keyboard.current.anyKey.wasReleasedThisFrame) //task 1c
         {
-            transform.position += currentVelocityLeftRight;
+            //the player immediately starts slowing down after letting go of the input
+            currentVelocity += decceleration * -accelerationDirection * Time.deltaTime;
+            Debug.Log("is this running");
         }
-        else if(Keyboard.current.upArrowKey.isPressed)
-        {
-            transform.position += currentVelocityUpDown;
-        }
-        else if (Keyboard.current.downArrowKey.isPressed)
-        {
-            transform.position -= currentVelocityUpDown;
-        }
+
+        transform.position += currentVelocity * Time.deltaTime;      
+        
+
+        //transform.position += currentVelocity * Time.deltaTime;
+
+
     }
 
 

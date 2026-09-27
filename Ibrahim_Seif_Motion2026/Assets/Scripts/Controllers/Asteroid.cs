@@ -37,7 +37,7 @@ public class Asteroid : MonoBehaviour
 
         //moveAsteroid += randomPoint;
 
-        Debug.Log(randomPoint);
+        //Debug.Log(randomPoint);
 
         //if (transform.position == arrivalDistance)
         //{
