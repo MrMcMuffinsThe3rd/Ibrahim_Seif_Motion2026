@@ -10,6 +10,10 @@ using Random = UnityEngine.Random;
 public class Player : MonoBehaviour
 {
     public List<Transform> asteroidTransforms;
+    public List<float> RadarAngles;
+    public int numberOfpoints;
+    public float radius;
+
     public Transform enemyTransform;
     public GameObject bombPrefab;
     public Transform bombsTransform;
@@ -44,8 +48,10 @@ public class Player : MonoBehaviour
 
         //transform.position += currentVelocity * Time.deltaTime;
 
-        PlayerMovement();
+        //PlayerMovement();
         //PlayerMovementProfSolution();
+
+        EnemyRadar(radius, numberOfpoints);
 
 
         if(Keyboard.current.bKey.wasPressedThisFrame) //task 1 part a
@@ -370,6 +376,25 @@ public class Player : MonoBehaviour
                                                                 //speed which we don't want
 
       
+    }
+
+
+    public void EnemyRadar(float r, int circlePoint)
+    {
+        //RadarAngles.Count = circlePoint;
+
+        float currentAngle = RadarAngles[0];
+
+        Vector3 startPoint = Vector3.zero;
+        Vector3 endPoint = new Vector3(Mathf.Cos(currentAngle), Mathf.Sin(currentAngle)) * r;
+
+        Debug.DrawLine(startPoint, endPoint); //draws only one line in the circle
+
+        //minimum amount of lines to make a circle? --> 5?
+        for (int i = 1; i <= circlePoint; i++)
+        {
+
+        }
     }
 
 

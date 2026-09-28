@@ -69,6 +69,8 @@ public class AngleTest : MonoBehaviour
         float currentAngle = Angles[currentAngleIndex];
         float currentAngleInRadians = currentAngle * Mathf.Deg2Rad; //dontt forget to convert degrees to radians before working with angles in general
 
+        //task 1 Week 4:
+        //insead of drawing from the origin to a point on a circle, get the points on the circle and draw lines between these points to draw what you want
         Vector3 startPoint = Vector3.zero + circleOffset; //circleOffset controls where the space is positioned in space
         Vector3 endPoint = new Vector3(Mathf.Cos(currentAngleInRadians), Mathf.Sin(currentAngleInRadians)) * circleRadius;
 
