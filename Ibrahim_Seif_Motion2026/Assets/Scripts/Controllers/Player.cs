@@ -417,8 +417,8 @@ public class Player : MonoBehaviour
                 Vector3 startPointLast = new Vector3(Mathf.Cos(lastAngle1InRadians), Mathf.Sin(lastAngle1InRadians)) * r;
                 Vector3 endPointLast = new Vector3(Mathf.Cos(lastAngle2InRadians), Mathf.Sin(lastAngle2InRadians)) * r;
 
-                Debug.DrawLine(startPointLast, endPointLast, Color.green, 5f);
-            }
+                Debug.DrawLine(startPointLast + transform.position, endPointLast + transform.position, Color.green, 1f);
+        }
 
             float currentAngle1 = RadarAngles[currentAngleIndex]; //so we can control which element of the list gets used
             float currentAngle2 = RadarAngles[currentAngleIndex + 1];
@@ -431,8 +431,8 @@ public class Player : MonoBehaviour
             Vector3 startPoint = new Vector3(Mathf.Cos(currentAngle1InRadians), Mathf.Sin(currentAngle1InRadians)) * r;
             Vector3 endPoint = new Vector3(Mathf.Cos(currentAngle2InRadians), Mathf.Sin(currentAngle2InRadians)) * r;
 
-            Debug.DrawLine (startPoint, endPoint, Color.green, 5f);
-        }
+            Debug.DrawLine(startPoint + transform.position, endPoint + transform.position, Color.green, 1f);
+    }   
     
 
 
