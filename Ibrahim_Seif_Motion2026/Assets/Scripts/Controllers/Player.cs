@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
@@ -11,8 +12,12 @@ public class Player : MonoBehaviour
 {
     public List<Transform> asteroidTransforms;
     public List<float> RadarAngles;
-    public int numberOfpoints;
+
+    public float anAngle;
+    public int numberOfPoints;
     public float radius;
+
+    int currentAngleIndex = 0;
 
     public Transform enemyTransform;
     public GameObject bombPrefab;
@@ -51,7 +56,7 @@ public class Player : MonoBehaviour
         //PlayerMovement();
         //PlayerMovementProfSolution();
 
-        EnemyRadar(radius, numberOfpoints);
+        EnemyRadar(radius, numberOfPoints);
 
 
         if(Keyboard.current.bKey.wasPressedThisFrame) //task 1 part a
@@ -379,23 +384,56 @@ public class Player : MonoBehaviour
     }
 
 
-    public void EnemyRadar(float r, int circlePoint)
+    public void EnemyRadar(float r, int circlePoints)
     {
-        //RadarAngles.Count = circlePoint;
-
-        float currentAngle = RadarAngles[0];
-
-        Vector3 startPoint = Vector3.zero;
-        Vector3 endPoint = new Vector3(Mathf.Cos(currentAngle), Mathf.Sin(currentAngle)) * r;
-
-        Debug.DrawLine(startPoint, endPoint); //draws only one line in the circle
-
-        //minimum amount of lines to make a circle? --> 5?
-        for (int i = 1; i <= circlePoint; i++)
+        //using this link: https://discussions.unity.com/t/set-size-of-generic-list-via-script/98584
+        if (RadarAngles.Count < circlePoints)
         {
+            for (int i = 0; i < circlePoints; i++)
+            {
+                anAngle += 360/circlePoints;
+                RadarAngles.Add(anAngle);
 
+                Debug.Log(i);
+            }
         }
-    }
+       
+        anAngle = 0;
+
+        currentAngleIndex++;
+
+        if (currentAngleIndex + 1 >= RadarAngles.Count)
+            {
+                currentAngleIndex = 0;
+
+                float lastAngle1 = RadarAngles[0]; //get the first element of the list
+                float lastAngle2 = RadarAngles[circlePoints-1]; //get the last element of the list
+
+                //converting to radians so unity can read it properly
+                float lastAngle1InRadians = Mathf.Deg2Rad * lastAngle1;
+                float lastAngle2InRadians = Mathf.Deg2Rad * lastAngle2;
+
+
+                Vector3 startPointLast = new Vector3(Mathf.Cos(lastAngle1InRadians), Mathf.Sin(lastAngle1InRadians)) * r;
+                Vector3 endPointLast = new Vector3(Mathf.Cos(lastAngle2InRadians), Mathf.Sin(lastAngle2InRadians)) * r;
+
+                Debug.DrawLine(startPointLast, endPointLast, Color.green, 5f);
+            }
+
+            float currentAngle1 = RadarAngles[currentAngleIndex]; //so we can control which element of the list gets used
+            float currentAngle2 = RadarAngles[currentAngleIndex + 1];
+
+            //converting to radians so unity can read it properly
+            float currentAngle1InRadians = Mathf.Deg2Rad * currentAngle1;
+            float currentAngle2InRadians = Mathf.Deg2Rad * currentAngle2;
+
+
+            Vector3 startPoint = new Vector3(Mathf.Cos(currentAngle1InRadians), Mathf.Sin(currentAngle1InRadians)) * r;
+            Vector3 endPoint = new Vector3(Mathf.Cos(currentAngle2InRadians), Mathf.Sin(currentAngle2InRadians)) * r;
+
+            Debug.DrawLine (startPoint, endPoint, Color.green, 5f);
+        }
+    
 
 
 }

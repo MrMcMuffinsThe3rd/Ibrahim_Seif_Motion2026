@@ -208,9 +208,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   asteroidTransforms: []
-  RadarAngles: []
-  anAngle: 0
-  numberOfPoints: 10
+  RadarAngles:
+  - 0
+  - 60
+  - 120
+  - 180
+  - 240
+  - 300
+  numberOfpoints: 1
   radius: 1
   enemyTransform: {fileID: 0}
   bombPrefab: {fileID: 0}
