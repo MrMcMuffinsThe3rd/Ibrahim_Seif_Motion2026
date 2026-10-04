@@ -209,9 +209,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   asteroidTransforms: []
   RadarAngles: []
+  powerUpPrefab: {fileID: 1567431237259788, guid: 03444c0c59102ba46bb1a8b5a1b0a810, type: 3}
+  numberOfPowerups: 20
+  powerUpOffset: {x: 0, y: 1, z: 0}
   anAngle: 0
   numberOfPoints: 10
-  radius: 1
+  radius: 3
   enemyTransform: {fileID: 2066834124}
   bombPrefab: {fileID: 0}
   bombsTransform: {fileID: 0}

@@ -13,6 +13,10 @@ public class Player : MonoBehaviour
     public List<Transform> asteroidTransforms;
     public List<float> RadarAngles;
 
+    public GameObject powerUpPrefab;
+    public int numberOfPowerups;
+    public Vector3 powerUpOffset = new Vector3(0,1);
+
     public float anAngle;
     public int numberOfPoints;
     public float radius;
@@ -56,7 +60,14 @@ public class Player : MonoBehaviour
         //PlayerMovement();
         //PlayerMovementProfSolution();
 
-        EnemyRadar(radius, numberOfPoints);
+        //EnemyRadar(radius, numberOfPoints);
+
+
+        if(Keyboard.current.pKey.wasPressedThisFrame)
+        {
+            SpawnPowerups(radius, numberOfPowerups);
+        }
+        
 
 
         if(Keyboard.current.bKey.wasPressedThisFrame) //task 1 part a
@@ -432,8 +443,30 @@ public class Player : MonoBehaviour
             Vector3 endPoint = new Vector3(Mathf.Cos(currentAngle2InRadians), Mathf.Sin(currentAngle2InRadians)) * r;
 
             Debug.DrawLine(startPoint + transform.position, endPoint + transform.position, Color.green, 1f);
-    }   
+    }
+
+
+    public void SpawnPowerups(float radius, int numberOfPowerups)
+    {
+        float anAngleInRadians = anAngle * Mathf.Deg2Rad;
+
+        powerUpOffset = new Vector3(Mathf.Cos(anAngleInRadians), Mathf.Sin(anAngleInRadians)) * radius;
+
+       for (int i = 0; i < numberOfPowerups; i++)
+        {
     
+            GameObject spawnedPowerUp = Instantiate(powerUpPrefab, transform.position + powerUpOffset, Quaternion.identity);
+
+            anAngle += 360 / numberOfPowerups;
+
+            anAngleInRadians = anAngle * Mathf.Deg2Rad;
+
+            powerUpOffset = new Vector3(Mathf.Cos(anAngleInRadians), Mathf.Sin(anAngleInRadians)) * radius;
+        }
+
+    }
+
+
 
 
 }
