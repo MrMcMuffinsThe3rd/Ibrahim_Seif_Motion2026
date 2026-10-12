@@ -1,8 +1,13 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class StarsMechanic : MonoBehaviour
 {
+    public List<GameObject> starsList;
+     int currentStarIndex = 0;
+
     public GameObject starsPrefab;
     public float radius;
 
@@ -30,7 +35,22 @@ public class StarsMechanic : MonoBehaviour
             SpawnStars(radius, numberOfStars);
         }
 
-        WarpStars(starsPrefab.transform, ratio, gravity);
+        if(starsList.Count > 0)
+        {
+            if (currentStarIndex >= starsList.Count)
+            {
+                currentStarIndex = 0;
+            }
+            else
+            {
+                currentStarIndex++;
+            }
+
+            WarpStars(starsList[currentStarIndex].transform, ratio, gravity);
+
+        }
+
+        
 
     }
 
@@ -50,6 +70,8 @@ public class StarsMechanic : MonoBehaviour
             anAngleInRadians = anAngle * Mathf.Deg2Rad;
 
             starsOffset = new Vector3(Mathf.Cos(anAngleInRadians), Mathf.Sin(anAngleInRadians)) * radius;
+
+            starsList.Add(spawnedStar);
 
         }
 
