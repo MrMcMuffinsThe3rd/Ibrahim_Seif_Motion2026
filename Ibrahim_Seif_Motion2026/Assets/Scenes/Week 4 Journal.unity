@@ -410,8 +410,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aa8f186247235e48ae9c3e421c27f61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StarsMechanic
+  starsList: []
   starsPrefab: {fileID: 5950338620086112888, guid: 89f23753b0c06024db80e5baa2570cce, type: 3}
-  radius: 2
+  radius: 5
   anAngle: 0
   starsOffset: {x: 1, y: 1, z: 1}
   numberOfStars: 10
