@@ -21,26 +21,26 @@ public class WarpMoonMechanic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        WarpMoon(moonTransform, ratio, gravity);
-        //OrbitMoon(radius, speed, moonTransform);
+        //WarpMoon(moonTransform, ratio, gravity);
+        OrbitMoon(radius, speed, moonTransform);
     }
 
-    public void WarpMoon(Transform moon, float ratio, float gravity)
-    {
-        //getting direction to a target vector
-        Vector2 fromEarthToMoon = moon.position - transform.position;
+    //public void WarpMoon(Transform moon, float ratio, float gravity)
+    //{
+    //    //getting direction to a target vector
+    //    Vector2 fromEarthToMoon = moon.position - transform.position;
 
-        //using this link: https://docs.unity3d.com/ScriptReference/Vector3.Lerp.html
+    //    //using this link: https://docs.unity3d.com/ScriptReference/Vector3.Lerp.html
 
 
-        //distance from Earth and moon
-        float distance = Vector3.Distance(transform.position, moon.position);
+    //    //distance from Earth and moon
+    //    float distance = Vector3.Distance(transform.position, moon.position);
 
-        ratio = gravity / distance * Time.deltaTime;
+    //    ratio = gravity / distance * Time.deltaTime;
 
-        moon.position = Vector3.Lerp(moon.position, transform.position, ratio);
+    //    moon.position = Vector3.Lerp(moon.position, transform.position, ratio);
 
-    }
+    //}
 
     public void OrbitMoon(float radius, float speed, Transform moon)
     {
