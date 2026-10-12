@@ -37,13 +37,11 @@ public class StarsMechanic : MonoBehaviour
 
         if(starsList.Count > 0)
         {
+            currentStarIndex++;
+
             if (currentStarIndex >= starsList.Count)
             {
                 currentStarIndex = 0;
-            }
-            else
-            {
-                currentStarIndex++;
             }
 
             WarpStars(starsList[currentStarIndex].transform, ratio, gravity);
