@@ -8,7 +8,7 @@ public class WarpMoonMechanic : MonoBehaviour
 
     public float radius;
     public float speed;
-    public float gravity;
+    //public float gravity;
 
     float turnAngle;
 
