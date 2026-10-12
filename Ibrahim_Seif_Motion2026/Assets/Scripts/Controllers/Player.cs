@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
         //PlayerMovement();
         //PlayerMovementProfSolution();
 
-        //EnemyRadar(radius, numberOfPoints);
+        EnemyRadar(radius, numberOfPoints);
 
 
         if(Keyboard.current.pKey.wasPressedThisFrame)
@@ -443,6 +443,40 @@ public class Player : MonoBehaviour
             Vector3 endPoint = new Vector3(Mathf.Cos(currentAngle2InRadians), Mathf.Sin(currentAngle2InRadians)) * r;
 
             Debug.DrawLine(startPoint + transform.position, endPoint + transform.position, Color.green, 1f);
+
+
+        //CODE BELOW THIS COMMENT WAS ADDED AFTER SUBMISSION (october 9th)
+
+        //If the enemy is contained within the radius of the circle, colour the circle red
+        //so we need a radius vector
+        //our radius is currently a float and NOT a vector
+        //how are we going to go about this?
+        //what is a radius --> a radius is the length of the line from the farthest point of a circle to the other (right down the middle)
+        //is it possible to get these 2 points from the radius length?
+        //we know we can get a point on a circle (vector) if we know the angle 
+        //and we can get a point on the circle if we know the lengths of x and y
+        //can this information help us in any way? --> can we get the vector radius from the angles we have? which angles? 
+        //from the inspector, I noticed that the line from angle 180 and 360 is always the "radius" 
+        //what can we deduce here from this information? --> we can find out which indexes are 180 and 360 and from that, we can get a vector 
+        //equations to get the indexes for 180 and 360 could be: RadarAngles[RadarAngles.count/2] (180) //RadarAngles[RadarAngles.count - 1] (360)
+
+        //length of x is half the radius in a unit circle (vector of x is (1,0)) 
+        //other half of radius is -x so (-1, 0) (opposite direction)
+        //so if we know vector x, we can know vector -x
+        //we know the radius, lets get half (r/2)
+        //now convert that into a vector (so we need to find the middle of the circle bec its not the origin in this case)
+        // the middle of the circle in this case is the player (so now we have a point for the middle which is transform.position)
+
+        //so unit circle x is (1,0), how do we get the origin from that (center of circle)? --> we do vector x (1,0) minus the radius/2
+        //apply that to the player transform
+        //so transform.position = vectorX (unknown) - r/2
+        //whats vectorX? --> vectorX = transform.position.x + r/2
+        //apply that in code and lets see what we get
+
+        Vector3 playerPos = transform.position;
+
+        Vector3 vectorX = Vector3.zero;
+        vectorX.x = playerPos.x - r / 2;
     }
 
 
