@@ -12,7 +12,7 @@ public class StarsMechanic : MonoBehaviour
     public float radius;
 
     float anAngle;
-    public Vector3 starsOffset = Vector3.one;
+    Vector3 starsOffset = Vector3.one;
     public int numberOfStars;
     float ratio;
     public float gravity;
