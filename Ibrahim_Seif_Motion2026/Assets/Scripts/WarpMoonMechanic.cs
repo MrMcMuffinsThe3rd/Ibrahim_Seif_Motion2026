@@ -50,7 +50,7 @@ public class WarpMoonMechanic : MonoBehaviour
         }
         else
         {
-            turnAngle++;
+            turnAngle += speed/radius;
         }
 
         float currentAngle = turnAngle;
