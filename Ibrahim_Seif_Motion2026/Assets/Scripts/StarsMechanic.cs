@@ -11,11 +11,9 @@ public class StarsMechanic : MonoBehaviour
     public GameObject starsPrefab;
     public float radius;
 
-    public float anAngle;
+    float anAngle;
     public Vector3 starsOffset = Vector3.one;
     public int numberOfStars;
-
-
     float ratio;
     public float gravity;
     //public Transform starTransform;
@@ -24,7 +22,7 @@ public class StarsMechanic : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -47,8 +45,6 @@ public class StarsMechanic : MonoBehaviour
             WarpStars(starsList[currentStarIndex].transform, ratio, gravity);
 
         }
-
-        
 
     }
 
@@ -87,8 +83,20 @@ public class StarsMechanic : MonoBehaviour
         //distance from Earth and star
         float distance = Vector3.Distance(transform.position, star.position);
 
+        Debug.Log(distance);
+
         ratio = gravity / distance * Time.deltaTime;
 
         star.position = Vector3.Lerp(star.position, transform.position, ratio);
+
+        if (distance == 0)
+        {
+            for (int i = starsList.Count - 1; i > -1; i--)
+            {
+                Destroy(starsList[i]);
+                starsList.Remove(starsList[i]);
+            }
+        }
+
     }
 }
