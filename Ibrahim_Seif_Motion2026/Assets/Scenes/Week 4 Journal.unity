@@ -413,10 +413,9 @@ MonoBehaviour:
   starsList: []
   starsPrefab: {fileID: 5950338620086112888, guid: 89f23753b0c06024db80e5baa2570cce, type: 3}
   radius: 5
-  anAngle: 0
   starsOffset: {x: 1, y: 1, z: 1}
   numberOfStars: 10
-  gravity: 3
+  gravity: 8
 --- !u!114 &1542318775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -424,14 +423,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1542318771}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8ff17d4854a71864ba3657bb8ef790b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WarpMoonMechanic
   moonTransform: {fileID: 1561805201}
   radius: 4
-  speed: 0
+  speed: 1
 --- !u!1 &1561805198
 GameObject:
   m_ObjectHideFlags: 0
