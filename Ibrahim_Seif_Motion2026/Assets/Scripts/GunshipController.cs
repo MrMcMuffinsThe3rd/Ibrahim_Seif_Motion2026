@@ -9,14 +9,40 @@ public class GunshipController : MonoBehaviour
     public GameObject cannonballPrefab;
     public float cannonballForce = 150f;
 
+    public Rigidbody2D rb;
+
     void Update()
     {
         //Takes the mouse position in screen coordinates (pixels) and converts it to world coordinates
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        
+
+        Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+        worldMousePosition.z = 0;
+
         //These methods aim the cannons based on where the mouse is in the 2D space
         Vector3 leftDirection = AimCannon(mousePosition, leftCannon);
         Vector3 rightDirection = AimCannon(mousePosition, rightCannon);
+
+
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            GameObject leftSpawnedCannonBall = Instantiate(cannonballPrefab, leftCannon.position, leftCannon.rotation);
+            rb = leftSpawnedCannonBall.GetComponent<Rigidbody2D>();
+
+            rb.AddForce(leftDirection.normalized * cannonballForce, ForceMode2D.Impulse); //Anything that we need to apply force to instantly, we use .Impulse
+                                                                                          //Anything like gravity or something that needs us to apply force
+                                                                                          //over a time period, we use .Force
+        }
+
+        if (Mouse.current.rightButton.wasPressedThisFrame)
+        {
+            GameObject rightSpawnedCannonBall = Instantiate(cannonballPrefab, rightCannon.position, rightCannon.rotation);
+            rb = rightSpawnedCannonBall.GetComponent<Rigidbody2D>();
+
+            rb.AddForce(rightDirection.normalized * cannonballForce, ForceMode2D.Impulse);
+
+
+        }
     }
 
     //Given a target position and the transform of a cannon, aims that cannon at that target
