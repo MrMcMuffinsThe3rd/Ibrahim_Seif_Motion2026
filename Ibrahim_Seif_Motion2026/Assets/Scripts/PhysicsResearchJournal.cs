@@ -14,7 +14,7 @@ public class PhysicsResearchJournal : MonoBehaviour
 
     void FixedUpdate()
     {
-        rb.AddForce(Vector3.right * 1f, ForceMode2D.Force);
+        //rb.AddForce(Vector3.right * 1f, ForceMode2D.Force);
         //rb.AddTorque(torque, ForceMode2D.Force);
 
     }
