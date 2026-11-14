@@ -6,6 +6,8 @@ public class PhysicsResearchJournal : MonoBehaviour
 
     public float torque;
 
+    public bool ignoreColision;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -14,7 +16,7 @@ public class PhysicsResearchJournal : MonoBehaviour
 
     void FixedUpdate()
     {
-        //rb.AddForce(Vector3.right * 1f, ForceMode2D.Force);
+        rb.AddForce(Vector3.right * 1f, ForceMode2D.Force);
         //rb.AddTorque(torque, ForceMode2D.Force);
 
     }
@@ -32,8 +34,15 @@ public class PhysicsResearchJournal : MonoBehaviour
         if (collision.gameObject.GetComponent<Collider2D>() != null)
         {
             Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>(), true);
+
+
+            ignoreColision = Physics2D.GetIgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+
+            Debug.Log(ignoreColision.ToString());
         }
+
 
     }
 
+ 
 }
