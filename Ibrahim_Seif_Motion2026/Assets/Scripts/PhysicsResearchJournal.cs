@@ -14,8 +14,9 @@ public class PhysicsResearchJournal : MonoBehaviour
 
     void FixedUpdate()
     {
-        //rb.AddForce(Vector3.right * 1f, ForceMode2D.Force);
-        rb.AddTorque(torque, ForceMode2D.Force);
+        rb.AddForce(Vector3.right * 1f, ForceMode2D.Force);
+        //rb.AddTorque(torque, ForceMode2D.Force);
+
     }
 
     // Update is called once per frame
@@ -24,13 +25,15 @@ public class PhysicsResearchJournal : MonoBehaviour
         
     }
 
-    public void AddTorqueForce(float torque, ForceMode2D force)
+    void OnCollisionEnter2D(Collision2D collision)
     {
+        //checks to see if the collision's gameobject
+        //has a collider2D component
+        if (collision.gameObject.GetComponent<Collider2D>() != null)
+        {
+            Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>(), true);
+        }
 
     }
 
-    public void AddTorqueImpulse(float torque, ForceMode2D force)
-    {
-
-    }
 }

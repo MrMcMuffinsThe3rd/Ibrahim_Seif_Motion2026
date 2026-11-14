@@ -34,7 +34,7 @@ public class ForcesTest : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Collision exit");
+        Debug.Log("Collision enter");
     }
 
     void OnCollisionExit2D(Collision2D collision)
