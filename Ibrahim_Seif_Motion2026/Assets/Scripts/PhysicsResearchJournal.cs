@@ -8,6 +8,9 @@ public class PhysicsResearchJournal : MonoBehaviour
 
     public bool ignoreColision;
 
+    public Transform start;
+    public Transform end;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -16,8 +19,13 @@ public class PhysicsResearchJournal : MonoBehaviour
 
     void FixedUpdate()
     {
-        rb.AddForce(Vector3.right * 1f, ForceMode2D.Force);
+        //rb.AddForce(Vector3.right * 1f, ForceMode2D.Force);
         //rb.AddTorque(torque, ForceMode2D.Force);
+
+        if(Physics2D.Linecast(start.position, end.position))
+        {
+            Debug.Log("Square detected");
+        }
 
     }
 

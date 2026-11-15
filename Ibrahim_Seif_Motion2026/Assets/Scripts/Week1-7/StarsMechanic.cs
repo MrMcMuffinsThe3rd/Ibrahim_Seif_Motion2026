@@ -83,7 +83,7 @@ public class StarsMechanic : MonoBehaviour
         //distance from Earth and star
         float distance = Vector3.Distance(transform.position, star.position);
 
-        Debug.Log(distance);
+        //Debug.Log(distance);
 
         ratio = gravity / distance * Time.deltaTime;
 
