@@ -24,7 +24,7 @@ public class PhysicsResearchJournal : MonoBehaviour
 
         if(Physics2D.Linecast(start.position, end.position))
         {
-            Debug.Log("Square detected");
+            Debug.Log("Moon detected");
         }
 
     }
