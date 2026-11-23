@@ -1711,7 +1711,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerRB: {fileID: 1433354317}
   maxSpeed: 3
+  visuals: {fileID: 1598075210}
   acceleration: 1
+  distance: 1
 --- !u!4 &1433354315
 Transform:
   m_ObjectHideFlags: 0
