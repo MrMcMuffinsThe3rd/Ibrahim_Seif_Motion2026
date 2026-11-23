@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 using UnityEngine.Tilemaps;
 
 public class PlayerController : MonoBehaviour
@@ -18,7 +19,15 @@ public class PlayerController : MonoBehaviour
 
     public float distance;
 
-    Vector3 currentVelocity;
+    public float apexHeight;
+    public float apexTime;
+
+     public float gravity;
+     public float initialJumpVelocity;
+
+    public bool wasJumpTriggered;
+
+    //Vector3 currentVelocity;
 
     public enum FacingDirection
     {
@@ -31,13 +40,16 @@ public class PlayerController : MonoBehaviour
         //playerRB = GetComponent<Rigidbody2D>();
 
         acceleration = maxSpeed / accelerationTime;
+
+        gravity = -2 * apexHeight / (apexTime * apexTime);
+
+        initialJumpVelocity = 2 * apexHeight / apexTime;
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        //The input from the player needs to be determined and then passed in to the MovementUpdate which should
-        //manage the actual movement of the character.
+        ////The input from the player needs to be determined and then passed in to the MovementUpdate which should
+        ////manage the actual movement of the character.
         Vector2 playerInput = new Vector2();
 
         if (Keyboard.current.rightArrowKey.isPressed)
@@ -52,10 +64,36 @@ public class PlayerController : MonoBehaviour
         MovementUpdate(playerInput);
     }
 
+    // Update is called once per frame
+    void Update()
+    {
+     
+        //If the player provides input for a jump, give them the initial jump velocity
+        if (Keyboard.current.sKey.wasPressedThisFrame)
+        {
+            wasJumpTriggered = true;
+            //playerInput.y += apexHeight; //jump up 
+        }
+
+    }
+
     private void MovementUpdate(Vector2 playerInput)
     {
 
         Vector2 newVelocity = playerRB.linearVelocity;
+
+        //Vector2 currentVelocity = playerRB.linearVelocity;
+
+
+        //apply the gravity that we calculate over time
+        newVelocity.y += gravity * Time.fixedDeltaTime; //negative means down, positive means up
+
+        if (wasJumpTriggered == true)
+        {
+            newVelocity.y = initialJumpVelocity; //do i neeed a deltatime here? --> no, because you're not changing it over time,
+                                                 //you're instantly setting the value
+            wasJumpTriggered = false;
+        }
 
         if (playerInput.x != 0)
         {
@@ -66,38 +104,19 @@ public class PlayerController : MonoBehaviour
         {
             newVelocity = Vector2.zero;
         }
+        //if (playerInput.y != 0)
+        //{
+        //    //jump
+        //    newVelocity = playerInput * initialJumpVelocity * Time.deltaTime;
+        //}
+        //else
+        //{
+        //    newVelocity = Vector2.zero;
+        //}
 
         playerRB.linearVelocity = newVelocity;
+            
 
-
-        //playerRB.linearVelocity = playerInput.x * Vector3.right * maxSpeed;
-
-
-        //if (Keyboard.current.leftArrowKey.isPressed)
-        //{
-        //    playerRB.linearVelocity = Vector3.left * 3f;
-
-        //}
-
-        //if (Keyboard.current.rightArrowKey.isPressed)
-        //{
-        //    playerRB.linearVelocity = Vector3.right * 3f;
-
-        //}
-
-        //if (Keyboard.current.upArrowKey.isPressed)
-        //{
-        //    playerRB.linearVelocity = Vector3.up * 3f;
-
-        //}
-
-        //if (Keyboard.current.downArrowKey.isPressed)
-        //{
-        //    playerRB.linearVelocity = Vector3.down * 3f;
-
-        //}
-
-        //playerRB.linearVelocity = Vector3.zero;
 
     }
 
@@ -122,7 +141,7 @@ public class PlayerController : MonoBehaviour
         //Using: https://docs.unity.com/en-us/engine/6000.0/script-reference/unityengine/physics2d/raycast
 
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, distance, 0); //returns RaycastHit2D
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, distance, 1); //returns RaycastHit2D
 
         //Debug.Log(hit.collider.gameObject.name);
 
